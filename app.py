@@ -30,6 +30,13 @@ def callback():
         abort(400)
     return 'OK'
 @handler.add(MessageEvent, message=StickerMessage)
+def handle_sticker_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        StickerSendMessage(
+            package_id=event.message.package_id,
+            sticker_id=event.message.sticker_id)
+    )
 # 處理訊息
 
 @handler.add(MessageEvent, message=TextMessage)
